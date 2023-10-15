@@ -49,7 +49,7 @@
     {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
 </head>
 
-<body class="bg-white">
+<body class="bg-slate-100">
     <div class="flex flex-col ">
         <nav class="flex bg-white w-full border border-b-2 px-24 py-2 items-center justify-between"
             style="flex-direction: row">

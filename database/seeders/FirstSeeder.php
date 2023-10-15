@@ -85,6 +85,24 @@ class FirstSeeder extends Seeder
             'category_id' => 1,
             'stand' => 1
         ]);
+        Products::create([
+            'name' => 'Nasi Uduk', 
+            'price' => 10000,
+            'stock' => 50,
+            'photo' => 'https://cdn1-production-images-kly.akamaized.net/KUMtCMB4LiYMDP30ZIA_ZwanZzw=/1x60:700x454/640x360/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/3264167/original/045475800_1602402228-1212646998.jpg',
+            'description' => 'enak',
+            'category_id' => 1,
+            'stand' => 1
+        ]);
+        Products::create([
+            'name' => 'Nasi Bakar', 
+            'price' => 8000,
+            'stock' => 50,
+            'photo' => 'https://shopee.co.id/inspirasi-shopee/wp-content/uploads/2022/01/Resep-nasi-bakar-ayam-sederhana.webp',
+            'description' => 'enak',
+            'category_id' => 1,
+            'stand' => 1
+        ]);
         Wallets::create([
             "user_id" => 4,
             "credit" => 100000,
