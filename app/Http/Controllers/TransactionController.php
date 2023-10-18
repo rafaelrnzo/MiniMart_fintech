@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TopUp;
 use App\Models\Transactions;
 use App\Models\Wallets;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class TransactionController extends Controller
             'price' => $price,
             'quantity' => $quantity,
         ]);
+
         return redirect()->back()->with('status', 'Berhasil menambah keranjang');
     }
 
@@ -35,6 +37,7 @@ class TransactionController extends Controller
 
         $carts = Transactions::where('user_id', Auth::user()->id)->where('status', 'dikeranjang')->get();
         $total_debit = 0;
+
         foreach ($carts as $cart) {
             $total_price = $cart->price * $cart->quantity;
             $total_debit += $total_price;
@@ -54,5 +57,29 @@ class TransactionController extends Controller
         }
 
         return redirect()->back()->with('status', 'Berhasil membayar');
+    }
+
+    public function topUp(Request $request)
+    {
+        $status = 'top up';
+        $user = Auth::user();
+        $amount = $request->input('amount');
+
+        $wallet = Wallets::where('user_id', $user->id)->first();
+        $currentCredit = $wallet->credit;
+
+        $updateCredit = $currentCredit + $amount;
+        $wallet->update([
+            'credit' => $updateCredit
+        ]);
+
+        TopUp::create([
+            'user_id' => $user->id,
+            'amount' => $amount,
+        ]);
+
+        return redirect()->back()->with('status', 'berhasil top up');
+
+
     }
 }

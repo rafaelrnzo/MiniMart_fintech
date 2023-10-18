@@ -12,11 +12,51 @@
                             </span>
                             <span class="text-base font-medium text-white">Rp{{ $saldo }}</span>
                         </div>
-                        <div
-                            class="relative rounded-full border border-slate-400 bg-white p-1 flex items-center justify-center">
+                        <div class="h-auto">
+                            <div x-data="{ showModal: false }">
+                                <button @click="showModal = true"
+                                    class="relative rounded-full border border-slate-400 bg-white p-1 flex items-center justify-center">
 
-                            <span class="material-icons w-auto text-blue-600 ">add</span>
+                                    <span class="material-icons w-auto text-blue-600 ">add</span>
+                                </button>
+           
+                                <div x-show="showModal"
+                                    class=" center fixed inset-0 items-center justify-center z-50 hidden w-screen h-screen bg-black bg-opacity-50">
+                                    <!-- Modal Container -->
+                                    <form action="{{ route('topUp') }}" method="post">
+                                        @csrf
+                                        <div
+                                            class="fixed flex inset-0 items-center justify-center w-full md:max-w-md mx-auto z-50 ">
+                                            <!-- Modal Content -->
+                                            <div class="modal-content w-11/12 text-left py-3 bg-white rounded-md">
+                                                <div class="flex justify-between items-center px-4 p-2">
+                                                    <p class="text-xl font-bold">Top Up</p>
+                                                </div>
+                                                <div class="flex justify-between items-center px-4 p-2 w-full">
+                                                    <div class="mb-2 w-full">
+                                                        <label class="block text-sm text-black mb-2">Input Value</label>
+                                                        <input
+                                                            class="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
+                                                            placeholder="Length" type="number" min="10000"
+                                                            max="1000000" step="10000" x-model="charsLength"
+                                                            id="amount" name="amount" />
+                                                    </div>
+                                                </div>
+                                                <div class="flex justify-end items-center px-4  gap-2">
+                                                    <button action="" type="submit" @click="showModal = false"
+                                                        class="modal-close cursor-pointer border-2 border-blue-600 w-1/4 font-medium text-md text-blue-600 px-4 py-2 rounded-full  hover:">Cancel</button>
+                                                    <button action="" type="submit"
+                                                        class="bg-blue-600 w-1/4 font-medium text-md text-white px-4 py-2 rounded-full  hover:">Top
+                                                        Up</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+
                         </div>
+
                     </div>
                     <div class="flex flex-row gap-2">
                         <div class="relative rounded-full border border-slate-400 bg-slate-100">
@@ -89,9 +129,9 @@
                                 <input type="hidden" value="{{ Auth::user()->id }}" name="user_id">
                                 <input type="hidden" value="{{ $product->id }}" name="product_id">
                                 <input type="hidden" value="{{ $product->price }}" name="price">
-                                <div class="flex flex-col rounded-xl gap-2 shadow-sm bg-white">
+                                <div class="flex flex-col rounded-md gap-2 shadow-sm bg-white">
                                     <div class="">
-                                        <img class="rounded-t-xl object-cover h-40 w-full" src="{{ $product->photo }}"
+                                        <img class="rounded-t-md object-cover h-40 w-full" src="{{ $product->photo }}"
                                             alt="" srcset="">
                                     </div>
                                     <div class="flex flex-col px-4 h-1/4">
@@ -108,8 +148,8 @@
                                             <input class="w-10 ml-2 pl-2 rounded-full bg-slate-100" type="number"
                                                 name="quantity" value="1" min="1" />
                                             {{-- <input type="number" id="numberInput" name="numberInput"
-                                                class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
-                                               > --}}
+                                          class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                                         > --}}
                                         </div>
                                         <div
                                             class="border border-blue-600 px-3 p-1 rounded-full mx-2 w-auto hover:bg-blue-600 transition-all ease-in-out duration-300">
@@ -121,32 +161,7 @@
                                 </div>
                             </form>
                         @endforeach
-                        <div class="h-screen">
-                            <div x-data="{ showModal: false }">
-                                <!-- Trigger the modal -->
-                                <button @click="showModal = true"
-                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Open
-                                    Modal</button>
 
-                                <!-- Modal Background -->
-                                <div x-show="showModal" class="fixed inset-0 flex items-center justify-center z-50">
-                                    <!-- Modal Container -->
-                                    <div
-                                        class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
-                                        <!-- Modal Content -->
-                                        <div class="modal-content py-4 text-left px-6">
-                                            <div class="flex justify-between items-center pb-3">
-                                                <p class="text-2xl font-bold">Modal Title</p>
-                                                <button @click="showModal = false"
-                                                    class="modal-close cursor-pointer z-50">&times;</button>
-                                            </div>
-                                            <!-- Your Modal Content Goes Here -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
 
                 </div>
@@ -154,32 +169,33 @@
             </div>
 
             {{-- <div class="">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
+      <div class="card">
+          <div class="card-header">{{ __('Dashboard') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+          <div class="card-body">
+              @if (session('status'))
+                  <div class="alert alert-success" role="alert">
+                      {{ session('status') }}
+                  </div>
+              @endif
 
-                    {{ __('You are logged in!') }}
-                </div>
-            </div>  
-        </div> --}}
+              {{ __('You are logged in!') }}
+          </div>
+      </div>  
+  </div> --}}
         </div>
     </div>
     <script>
         // This script handles the modal visibility toggle
         document.addEventListener('DOMContentLoaded', function() {
-            const showModalButton = document.querySelector('[x-data="{ showModal: false }"] button');
+            const showModalButton = document.querySelector('[x-data="{ showModal: false }"]     button');
             const modalBackground = document.querySelector('[x-show="showModal"]');
             const closeModalButton = modalBackground.querySelector('.modal-close');
 
             showModalButton.addEventListener('click', function() {
                 modalBackground.style.display = 'block';
             });
+
 
             closeModalButton.addEventListener('click', function() {
                 modalBackground.style.display = 'none';

@@ -22,3 +22,4 @@ Auth::routes();
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index']);
 Route::post('/addToCart', [App\Http\Controllers\TransactionController::class, 'addToCart'])->name('addToCart');
 Route::post('/payNow', [App\Http\Controllers\TransactionController::class, 'payNow'])->name('pay');
+Route::post('/topUp', [App\Http\Controllers\TransactionController::class, 'topUp'])->name('topUp');

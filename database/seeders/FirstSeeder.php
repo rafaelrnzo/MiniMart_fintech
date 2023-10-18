@@ -49,6 +49,7 @@ class FirstSeeder extends Seeder
             'classroom' => 'XII RPL'
 
         ]);
+
         Category::create([
             'name' => 'Makanan'
         ]);
@@ -58,6 +59,7 @@ class FirstSeeder extends Seeder
         Category::create([
             'name' => 'Snack'
         ]);
+
         Products::create([
             'name' => 'Risol', 
             'price' => 3000,
@@ -116,6 +118,7 @@ class FirstSeeder extends Seeder
             "price" => 10000,
             "quantity" => 2
         ]);
+        
         $transactions = Transactions::where('order_id', 'INV_12345');
         $total_debit = 0;
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Products;
 use App\Models\Transactions;
+use App\Models\User;
 use App\Models\Wallets;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +28,10 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $wallets = Wallets::where('user_id', Auth::user()->id)->get();
+        $userNames = User::pluck('name')->all();
+
+        $user = Auth::user();
+        $wallets = Wallets::where('user_id', $user->id)->get();
         $credit = 0;
         $debit = 0;
 
@@ -47,9 +51,17 @@ class HomeController extends Controller
             $total_price = $cart->price * $cart->quantity;
             $total_biaya += $total_price;
         }
+
         $mutasi = Wallets::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->get();
 
-
-        return view('home', compact('saldo', 'all_product', 'carts', 'total_biaya','mutasi'));
+        if ($user->role == "admin") {
+            return view('admin.index', compact('saldo', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+        } elseif ($user->role == 'bank') {
+            return view('bank.index', compact('saldo', ' userNames'));
+        } elseif ($user->role == 'kantin') {
+            return view('kantin.index', compact('saldo'));
+        } else {
+            return view('user.home', compact('saldo', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+        }
     }
 }
