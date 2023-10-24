@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('top_ups', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained();
+            $table->string('transaction_id')->nullable();
             $table->double('amount');
             $table->timestamps();
         });

@@ -28,7 +28,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $userNames = User::pluck('name')->all();
+        // $userNames = User::pluck('name')->all();
 
         $user = Auth::user();
         $wallets = Wallets::where('user_id', $user->id)->get();
@@ -54,14 +54,32 @@ class HomeController extends Controller
 
         $mutasi = Wallets::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->get();
 
-        if ($user->role == "admin") {
-            return view('admin.index', compact('saldo', 'all_product', 'carts', 'total_biaya', 'mutasi'));
-        } elseif ($user->role == 'bank') {
-            return view('bank.index', compact('saldo', ' userNames'));
-        } elseif ($user->role == 'kantin') {
-            return view('kantin.index', compact('saldo'));
-        } else {
-            return view('user.home', compact('saldo', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+        $transactions = Transactions::where('status', 'dibayar')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->paginate(5)->groupBy('order_id');
+
+        // if ($user->role == "admin") {
+        //     return view('admin.index', compact('saldo', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+        // } elseif ($user->role == 'bank') {
+        //     return view('bank.index', compact('saldo'));
+        // } else {
+        //     return view('user.home', compact('saldo', 'transactions', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+        // }
+
+        return view('user.home', compact('saldo', 'transactions', 'all_product', 'carts', 'total_biaya', 'mutasi'));
+    }
+
+    public function profile()
+    {
+        $carts = Transactions::where('status', 'dikeranjang')->get();
+        $total_biaya = 0;
+        foreach ($carts as $cart) {
+            $total_price = $cart->price * $cart->quantity;
+            $total_biaya += $total_price;
         }
+        $mutasi = Wallets::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->get();
+
+        $transactions = Transactions::where('status', 'dibayar')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->paginate(5)->groupBy('order_id');
+
+
+        return view('user.profile', compact('mutasi', 'transactions', 'total_biaya'));
     }
 }

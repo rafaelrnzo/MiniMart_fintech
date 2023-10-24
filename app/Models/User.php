@@ -20,6 +20,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'role',
         'password',
     ];
 
@@ -45,7 +46,7 @@ class User extends Authenticatable
     ];
 
     public function transcations(){
-        return $this->hasMany(Transaction::class);
+        return $this->hasMany(Transactions::class);
     }
 
     public function wallet(){

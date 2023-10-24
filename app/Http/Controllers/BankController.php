@@ -2,18 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\TopUp;
 use Illuminate\Http\Request;
 
-class TopUpController extends Controller
+class BankController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    public function __construct()
+    {
+        $this->middleware('role.bank');
+    }
     public function index()
     {
-        $all_topUp = TopUp::all();
-
+        return view('bank.index');
     }
 
     /**
@@ -35,7 +34,7 @@ class TopUpController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(TopUp $topUp)
+    public function show(string $id)
     {
         //
     }
@@ -43,7 +42,7 @@ class TopUpController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(TopUp $topUp)
+    public function edit(string $id)
     {
         //
     }
@@ -51,7 +50,7 @@ class TopUpController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TopUp $topUp)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -59,7 +58,7 @@ class TopUpController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TopUp $topUp)
+    public function destroy(string $id)
     {
         //
     }

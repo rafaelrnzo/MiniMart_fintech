@@ -11,7 +11,8 @@ class TopUp extends Model
 
     protected $fillable = [
         'user_id',
-        'amount'
+        'transaction_id',
+        'value',
     ];
 
     public function user(){

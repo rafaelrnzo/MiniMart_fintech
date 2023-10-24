@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="h-auto flex flex-row gap-8">
-                <a href="" class="text-base ">Home</a>
+                <a href="{{ route('home') }}" class="t ext-base ">Home</a>
                 <a href="" class="text-base ">Product</a>
                 <a href="" class="text-base ">Category</a>
             </div>
@@ -96,7 +96,7 @@
                             @csrf
                         </form>
 
-                        <a id="" class="text-md" href="#" role="button" data-bs-toggle="dropdown"
+                        <a id="" class="text-md" href="{{ route('profile') }}" role="button" data-bs-toggle="dropdown"
                             aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
                         </a>

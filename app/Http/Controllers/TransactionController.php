@@ -82,4 +82,16 @@ class TransactionController extends Controller
 
 
     }
+
+    public function download($order_id){
+        $transactions = Transactions::where('order_id', $order_id)->get();
+        $total_biaya = 0;
+
+        foreach($transactions as $transaction){
+            $total_price = $transaction->price * $transaction->quantity;
+            $total_biaya = $total_price;
+        }
+
+        return view('user.receipt', compact('transactions', 'total_biaya'));
+    }
 }

@@ -36,14 +36,23 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+
         ],
 
         'api' => [
             // \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
-            \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
+            \Illuminate\Routing\Middleware\ThrottleRequests::class . ':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
         ],
     ];
+
+    protected $routeMiddleware = [
+        // ...
+        'role' => \App\Http\Middleware\RoleCheckMiddleware::class,
+        'role.kantin' => \App\Http\Middleware\CanteenMiddleware::class,
+        'role.bank' => \App\Http\Middleware\BankMiddleware::class,
+    ];
+
 
     /**
      * The application's middleware aliases.

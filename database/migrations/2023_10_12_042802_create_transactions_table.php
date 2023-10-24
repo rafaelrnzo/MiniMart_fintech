@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained();
             $table->enum('status', ['dikeranjang', 'dibayar']);
-            $table->string('order_id')->nullable()->default(null);
+            $table->string('order_id')->nullable();
             $table->double('price');
             $table->integer('quantity')->nullable()->default(1);
 
