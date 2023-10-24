@@ -59,35 +59,56 @@ class TransactionController extends Controller
         return redirect()->back()->with('status', 'Berhasil membayar');
     }
 
+    public function topUpSuccess($id)
+    {
+        $wallet = Wallets::find($id);
+
+        $wallet->update([
+            "status" => "success"
+        ]);
+
+        return redirect()->back();
+    }
+
     public function topUp(Request $request)
     {
-        $status = 'top up';
-        $user = Auth::user();
-        $amount = $request->input('amount');
+        $user = Auth::user()->id;
 
-        $wallet = Wallets::where('user_id', $user->id)->first();
-        $currentCredit = $wallet->credit;
-
-        $updateCredit = $currentCredit + $amount;
-        $wallet->update([
-            'credit' => $updateCredit
+        Wallets::create([
+            "user_id" => $user,
+            "credit" => $request->credit,
+            "status" => "pending"
         ]);
 
-        TopUp::create([
-            'user_id' => $user->id,
-            'amount' => $amount,
-        ]);
+        return redirect()->back();
+        // $status = 'top up';
+        // $user = Auth::user();
+        // $amount = $request->input('amount');
 
-        return redirect()->back()->with('status', 'berhasil top up');
+        // $wallet = Wallets::where('user_id', $user->id)->first();
+        // $currentCredit = $wallet->credit;
+
+        // $updateCredit = $currentCredit + $amount;
+        // $wallet->update([
+        //     'credit' => $updateCredit
+        // ]);
+
+        // TopUp::create([
+        //     'user_id' => $user->id,
+        //     'amount' => $amount,
+        // ]);
+
+        // return redirect()->back()->with('status', 'berhasil top up');
 
 
     }
 
-    public function download($order_id){
+    public function download($order_id)
+    {
         $transactions = Transactions::where('order_id', $order_id)->get();
         $total_biaya = 0;
 
-        foreach($transactions as $transaction){
+        foreach ($transactions as $transaction) {
             $total_price = $transaction->price * $transaction->quantity;
             $total_biaya = $total_price;
         }

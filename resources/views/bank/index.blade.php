@@ -79,12 +79,14 @@
                                         @endif
                                     </td>
                                     <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                        <div class="">
-                                            <a href="" class="p-2 px-4 text-white rounded-full bg-blue-600"
+                                        <form class="" action="/topup/{{ $bank->id }}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <button type="submit" class="p-2 px-4 text-white rounded-full bg-blue-600"
                                                 target="_blank">
                                                 Top Up
-                                            </a>
-                                        </div>
+                                            </button>
+                                        </form>
                                     </td>
                                 </tr>
                             @endforeach

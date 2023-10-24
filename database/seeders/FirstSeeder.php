@@ -109,7 +109,7 @@ class FirstSeeder extends Seeder
         Wallets::create([
             "user_id" => 4,
             "credit" => 100000,
-            "description" => "pembukaan buku rekening",
+            // "description" => "pembukaan buku rekening",
             "status" => "pending"
         ]);
         Transactions::create([
@@ -132,7 +132,7 @@ class FirstSeeder extends Seeder
         Wallets::create([
             "user_id" => 4,
             "debit" => $total_debit,
-            "description" => "pembelian produk"
+            // "description" => "pembelian produk"
         ]);
 
         foreach($transactions as $transaction){

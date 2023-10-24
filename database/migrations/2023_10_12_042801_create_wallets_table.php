@@ -17,7 +17,7 @@ return new class extends Migration
             $table->double('credit')->nullable();	
             $table->double('debit')->nullable();	
             $table->string('status')->nullable();	
-            $table->text('description');
+            // $table->text('description');
             $table->timestamps();
         });
     }

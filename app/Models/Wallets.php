@@ -12,7 +12,6 @@ class Wallets extends Model
         "debit",
         "credit",
         "status",
-        "description"
     ];
 
     public function user(){

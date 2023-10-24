@@ -22,6 +22,7 @@ Auth::routes();
 Route::group(['middleware' => 'auth'], function () {
   Route::get('/kantin', [App\Http\Controllers\CanteenController::class, 'index'])->middleware('web', 'role.kantin')->name('kantin');
   Route::get('/bank', [App\Http\Controllers\BankController::class, 'index'])->middleware('web', 'role.bank')->name('bank');
+  Route::put('/topup/{id}', [App\Http\Controllers\TransactionController::class, 'topUpSuccess']);
   
   Route::prefix('/user')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->middleware('role:siswa')->name('home');

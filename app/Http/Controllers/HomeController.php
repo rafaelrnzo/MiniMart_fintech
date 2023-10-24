@@ -31,7 +31,7 @@ class HomeController extends Controller
         // $userNames = User::pluck('name')->all();
 
         $user = Auth::user();
-        $wallets = Wallets::where('user_id', $user->id)->get();
+        $wallets = Wallets::where('user_id', $user->id)->where('status', 'success')->get();
         $credit = 0;
         $debit = 0;
 
