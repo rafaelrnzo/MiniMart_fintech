@@ -50,7 +50,7 @@ class User extends Authenticatable
     }
 
     public function wallet(){
-         return $this->hasMany(Wallets::class);
+         return $this->hasOne(Wallets::class);
     }
 
     public function topUp(){

@@ -34,23 +34,61 @@
                     <table class="min-w-full bg-white table-auto">
                         <thead>
                             <tr>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">Transaction ID</th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">User</th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">Value</th>
-                                <th class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">Action</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    ID</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    User</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Credit</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Debit</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Status</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">1</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">John Doe</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">john@example.com</td>
-                            </tr>
-                            <tr>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">2</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">Jane Smith</td>
-                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">jane@example.com</td>
-                            </tr>
+                            @foreach ($banks as $key => $bank)
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        {{ $bank->id }}</td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        {{ $bank->user->name }}</td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $bank->credit }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $bank->debit }}
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        @if ($bank->status === 'pending')
+                                            <div class="flex items-center">
+                                                <div class="w-2 h-2 bg-yellow-600 rounded-full mr-2"></div>
+                                                <p class="text-yellow-600">Pending</p>
+                                            </div>
+                                        @elseif ($bank->status === 'success')
+                                            <div class="flex items-center">
+                                                <div class="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
+                                                <p class="text-green-600">Success</p>
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                        <div class="">
+                                            <a href="" class="p-2 px-4 text-white rounded-full bg-blue-600"
+                                                target="_blank">
+                                                Top Up
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            @endforeach
+
                         </tbody>
                     </table>
                 </div>

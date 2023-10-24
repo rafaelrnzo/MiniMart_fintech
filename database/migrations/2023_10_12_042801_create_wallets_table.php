@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained();	
             $table->double('credit')->nullable();	
             $table->double('debit')->nullable();	
+            $table->string('status')->nullable();	
             $table->text('description');
             $table->timestamps();
         });

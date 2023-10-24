@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->string('transaction_id')->nullable();
-            $table->double('amount');
+            $table->double('value');
             $table->timestamps();
         });
     }

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TopUp;
+use App\Models\Wallets;
 use Illuminate\Http\Request;
 
 class BankController extends Controller
@@ -12,7 +14,9 @@ class BankController extends Controller
     }
     public function index()
     {
-        return view('bank.index');
+        $banks = Wallets::with("user")->get();
+
+        return view('bank.index', compact('banks'));
     }
 
     /**

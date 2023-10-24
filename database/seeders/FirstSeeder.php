@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Category;
 use App\Models\Products;
 use App\Models\Students;
+use App\Models\TopUp;
 use App\Models\Transactions;
 use App\Models\User;
 use App\Models\Wallets;
@@ -108,7 +109,8 @@ class FirstSeeder extends Seeder
         Wallets::create([
             "user_id" => 4,
             "credit" => 100000,
-            "description" => "pembukaan buku rekening"
+            "description" => "pembukaan buku rekening",
+            "status" => "pending"
         ]);
         Transactions::create([
             "user_id" => 4,
@@ -138,5 +140,11 @@ class FirstSeeder extends Seeder
                 "status" => "dibayar"
             ]);
         }
+
+        TopUp::create([
+            "user_id" => 4,
+            "transaction_id" => 'TRF_2103109012',
+            "value" => 10000
+        ]);
     }
 }

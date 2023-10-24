@@ -11,10 +11,11 @@ class Wallets extends Model
         "user_id",
         "debit",
         "credit",
+        "status",
         "description"
     ];
 
     public function user(){
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 }
