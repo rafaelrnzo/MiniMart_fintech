@@ -75,9 +75,9 @@
                                 </div>
                             </div>
 
-                            <div class="row mb-0">
-                                <div class="col-md-8 offset-md-4">
-                                    <button type="submit" class="btn btn-primary">
+                            <div class="flex-col flex">
+                                <div class="flex flex-col items-start  offset-md-4">
+                                    <button type="submit" class="bg-blue-600 p-4 py-2 text-white rounded-lg text-semibold mb-2">
                                         {{ __('Login') }}
                                     </button>
 

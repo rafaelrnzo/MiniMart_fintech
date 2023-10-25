@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\TopUp;
+use App\Models\Transactions;
+use App\Models\User;
 use App\Models\Wallets;
 use Illuminate\Http\Request;
 
@@ -14,9 +16,13 @@ class BankController extends Controller
     }
     public function index()
     {
-        $banks = Wallets::with("user")->get();
+        $banks = Wallets::with("user")->orderBy('created_at', 'desc')->get();
+        $filtered_bank = $banks->except(['debit']);
+        $nasabah = User::where('role', 'siswa')->count();
+        $transaction_count = Wallets::with('user')->where('status', 'pending')->count();
+        $wallet_count = Wallets::with('user')->where('status', 'success')->count(); 
 
-        return view('bank.index', compact('banks'));
+        return view('bank.index', compact('banks','nasabah','wallet_count','transaction_count'));
     }
 
     /**

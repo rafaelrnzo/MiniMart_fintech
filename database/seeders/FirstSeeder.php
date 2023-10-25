@@ -132,7 +132,7 @@ class FirstSeeder extends Seeder
         Wallets::create([
             "user_id" => 4,
             "debit" => $total_debit,
-            // "description" => "pembelian produk"
+            // "description" => "pembelian p roduk"
         ]);
 
         foreach($transactions as $transaction){

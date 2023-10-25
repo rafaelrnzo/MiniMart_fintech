@@ -50,8 +50,8 @@
 </head>
 
 <body class="bg-slate-100">
-    <div class="flex flex-row w-full">
-        <div class="bg-white h-screen w-1/6 border-r border-slate-200 flex flex-col p-4 justify-start items-start">
+    <div class="flex relative">
+        <div class="bg-white h-screen w-1/6 border-r border-slate-200 flex flex-col p-4 justify-start items-start fixed left-0 top-0">
             <div class="flex flex-col w-full gap-4">
 
                 <div class="h-auto w-auto flex items-center gap-1 border-b border-white py-2 mb-4">
@@ -86,8 +86,8 @@
 
             </div>
         </div>
-        <div class="flex flex-col w-5/6 ">
-            <div class="flex bg-white w-full border-b border-slate-200 px-12 py-2 items-center justify-end">
+        <div class="flex flex-col w-5/6 ml-[16.66667%] relative" >
+            <div class="flex bg-white  border-b border-slate-200 px-12 py-2 items-center justify-end fixed z-50 w-5/6 ">
 
 
                 @guest
@@ -137,7 +137,7 @@
                 </div>
             </div>
 
-            <main class=" w-full h-full p-6 ">
+            <main class=" w-full h-full px-6 py-20 overflow-y-auto">
                 @yield('content')
             </main>
         </div>
