@@ -43,16 +43,24 @@ class TransactionController extends Controller
             $total_debit += $total_price;
         }
 
-        Wallets::create([
-            'user_id' => Auth::user()->id,
-            'debit' => $total_debit,
-            'description' => 'pembelian produk',
+        $user = Auth::user();
+        $wallet = Wallets::where('user_id', $user->id)->first();
+
+        if (!$wallet) {
+            return redirect()->back()->with('error', 'No wallet found');
+        }
+
+        $newCredit = $wallet->credit - $total_debit;
+
+        $wallet->update([
+            'credit' => $newCredit,
+            // 'description' => 'pembelian produk',
         ]);
 
         foreach ($carts as $cart) {
             Transactions::find($cart->id)->update([
                 'status' => $status,
-                'order_id' => $order_id
+                'order_id' => $order_id,
             ]);
         }
 

@@ -20,7 +20,13 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-  Route::get('/kantin', [App\Http\Controllers\CanteenController::class, 'index'])->middleware('web', 'role.kantin')->name('kantin');
+  Route::prefix('/kantin')->group(function(){
+    Route::get('/', [App\Http\Controllers\CanteenController::class, 'index'])->middleware('web', 'role.kantin')->name('kantin');
+    Route::delete('/delete/{id}', [App\Http\Controllers\CanteenController::class, 'destroy'])->middleware('web', 'role.kantin')->name('deleteProduct');
+    Route::post('/create', [App\Http\Controllers\CanteenController::class, 'store'])->middleware('web', 'role.kantin')->name('product.store');
+  })->name('kantin');
+
+
   Route::get('/bank', [App\Http\Controllers\BankController::class, 'index'])->middleware('web', 'role.bank')->name('bank');
   Route::put('/topup/{id}', [App\Http\Controllers\TransactionController::class, 'topUpSuccess']);
   

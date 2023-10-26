@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('photo');	
             $table->text('description');	
             $table->foreignId('category_id')->constrained();	
-            $table->char('stand', 2);
+            $table->char('stand', 2)->nullable();
             $table->timestamps();
         });
     }

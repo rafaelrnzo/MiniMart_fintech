@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Products;
 use Illuminate\Http\Request;
 
@@ -15,8 +16,9 @@ class CanteenController extends Controller
     public function index()
     {
         $all_products = Products::all();
+        $categories = Category::all();
 
-        return view('kantin.index', compact('all_products'));
+        return view('kantin.index', compact('all_products','categories'));
     }
 
     /**
@@ -32,7 +34,25 @@ class CanteenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $name = $request->name;
+        $price = $request->price;
+        $stock = $request->stock;
+        $photo = $request->photo;
+        $description = $request->description;
+        $category = $request->category;
+        $stand = $request->stand;
+
+        Products::create([
+            'name' => $name,
+            'price' => $price,
+            'stock' => $stock,
+            'photo' => $photo,
+            'description' => $description,
+            'category_id' => $category,
+            // 'stand' => $stand
+        ]);
+
+        return redirect()->back();
     }
 
     /**
@@ -48,7 +68,7 @@ class CanteenController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        
     }
 
     /**
@@ -64,6 +84,11 @@ class CanteenController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $product = Products::find($id);
+
+        $product->delete();
+
+        return redirect()->route('kantin')->with('success');
+
     }
 }

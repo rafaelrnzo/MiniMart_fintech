@@ -86,7 +86,7 @@
                 </div>
             @else
                 <div class="h-auto flex items-center gap-2 ">
-                    <span class="material-symbols-outlined">
+                    <span class="material-icons text-black">
                         notifications
                     </span>
                     <div class="profile flex items-center gap-2  rounded-full bg-slate-100 p-2 ">
