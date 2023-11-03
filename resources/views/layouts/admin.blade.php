@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" data-theme="corporate">
 
 <head>
     <meta charset="utf-8">
@@ -33,7 +33,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans&display=swap" rel="stylesheet">
-
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.3/dist/full.css" rel="stylesheet" type="text/css" />
     <style>
         body {
             font-family: 'inter', sans-serif;
@@ -56,7 +56,7 @@
     <div class="flex relative">
         <div
             class="bg-white h-screen w-1/6 border-r border-slate-200 flex flex-col p-4 justify-start items-start fixed left-0 top-0">
-            <div class="flex flex-col w-full gap-4">
+            <div class="flex flex-col w-full">
 
                 <div class="h-auto w-auto flex items-center gap-1 border-b border-white py-2 mb-4">
                     <span class="material-symbols-outlined text-[2.5rem] text-blue-600">
@@ -65,28 +65,9 @@
                     <span class="font-sans text-2xl font-bold text-blue-600"> MyCanteen </span>
                 </div>
                 <div class="flex flex-col gap-3">
-                    {{-- h-auto w-full flex items-center gap-1 p-2 bg-white rounded-lg text-2xl text-blue-600 --}}
-                    <a {{-- href="{{ route('') }}" --}}
-                        class="@if (request()->routeIs('')) h-auto w-full flex items-center gap-1 p-2 bg-white rounded-lg text-2xl text-blue-600  @else matik @endif">
-                        <span class="material-symbols-outlined ">
-                            Dashboard
-                        </span>
-                        <span class="font-sans text-md text-blue-600 font-semibold"> Dashboard </span>
-                    </a>
-                    <button
-                        class="h-auto w-full flex items-center gap-2 p-2 px-4 bg-blue-600 rounded-lg font-sans text-lg text-white  font-medium">
-                        <span class="material-symbols-outlined text-2xl ">
-                            fastfood
-                        </span>
-                        <span class=""> Product </span>
-                    </button>
-                    <button
-                        class="text-lg font-semibold h-auto w-full flex items-center gap-1 p-2  rounded-lg text-blue-600">
-                        <span class="material-symbols-outlined text-2xl">
-                            history
-                        </span>
-                        <span class="font-sans "> Transaction </span>
-                    </button>
+                    
+                    @yield('sidebar')
+                    
                 </div>
 
             </div>
@@ -147,6 +128,7 @@
             </main>
         </div>
     </div>
+
 </body>
 
 </html>

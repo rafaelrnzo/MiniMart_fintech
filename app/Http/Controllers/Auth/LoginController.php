@@ -28,9 +28,11 @@ class LoginController extends Controller
 {
     // Set peran pengguna
     if ($user->role === 'admin') {
-        return redirect()->route('admin.dashboard');
+        return redirect()->route('admin');
     } elseif ($user->role === 'kantin') {
         return redirect()->route('kantin');
+    } elseif ($user->role === 'bank') {
+        return redirect()->route('bank');
     } elseif ($user->role === 'user') {
         return redirect()->route('user');
     }

@@ -16,7 +16,13 @@ class Transactions extends Model
         'quantity',
     ];
 
-    public function product(){
+    public function product()
+    {
         return $this->belongsTo(Products::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

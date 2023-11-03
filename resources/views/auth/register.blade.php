@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="w-full h-full py-20">
+    {{-- <div class="w-full h-full py-20">
         <div class="flex justify-center w-full">
             <div class="flex justify-center flex-col w-full items-center align-center px-80">
                 <div class=" flex flex-col p-8 py-32 border rounded-xl w-full gap-3 bg-white">
@@ -95,7 +95,7 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection --}}
 
 
 <div class="container">
@@ -171,4 +171,5 @@
         </div>
     </div>
 </div>
+
 @endsection

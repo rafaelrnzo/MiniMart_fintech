@@ -77,7 +77,7 @@ class HomeController extends Controller
         }
         $mutasi = Wallets::where('user_id', Auth::user()->id)->orderby('created_at', 'DESC')->get();
 
-        $transactions = Transactions::where('status', 'dibayar')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->paginate(5)->groupBy('order_id');
+        $transactions = Transactions::where('status', 'diambil')->where('user_id', Auth::user()->id)->orderBy('created_at', 'DESC')->paginate(5)->groupBy('order_id');
 
 
         return view('user.profile', compact('mutasi', 'transactions', 'total_biaya'));

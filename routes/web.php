@@ -14,22 +14,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+  return view('welcome');
 });
 
 Auth::routes();
 
 Route::group(['middleware' => 'auth'], function () {
-  Route::prefix('/kantin')->group(function(){
+  Route::prefix('/kantin')->group(function () {
     Route::get('/', [App\Http\Controllers\CanteenController::class, 'index'])->middleware('web', 'role.kantin')->name('kantin');
+    Route::get('/buy', [App\Http\Controllers\CanteenController::class, 'accIndex'])->middleware('web', 'role.kantin')->name('accept');
+    Route::get('/{id}/edit', [App\Http\Controllers\CanteenController::class, 'edit'])->middleware('web', 'role.kantin')->name('product.edit');
+    Route::put('/{id}', [App\Http\Controllers\CanteenController::class, 'update'])->middleware('web', 'role.kantin')->name('product.update');
     Route::delete('/delete/{id}', [App\Http\Controllers\CanteenController::class, 'destroy'])->middleware('web', 'role.kantin')->name('deleteProduct');
     Route::post('/create', [App\Http\Controllers\CanteenController::class, 'store'])->middleware('web', 'role.kantin')->name('product.store');
-  })->name('kantin');
+    Route::put('/take/{id}', [App\Http\Controllers\CanteenController::class, 'takeOrder']);
+  });
 
+  Route::prefix('/admin')->group(function () {
+    Route::get('/', [App\Http\Controllers\AdminController::class, 'index'])->middleware('web', 'role.admin')->name('admin');
+  });
 
-  Route::get('/bank', [App\Http\Controllers\BankController::class, 'index'])->middleware('web', 'role.bank')->name('bank');
-  Route::put('/topup/{id}', [App\Http\Controllers\TransactionController::class, 'topUpSuccess']);
-  
+  Route::prefix('/bank')->group(function () {
+    Route::get('/bank', [App\Http\Controllers\BankController::class, 'index'])->middleware('web', 'role.bank')->name('bank');
+    Route::put('/topup/{id}', [App\Http\Controllers\TransactionController::class, 'topUpSuccess']);
+  });
+
   Route::prefix('/user')->group(function () {
     Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->middleware('role:siswa')->name('home');
     Route::get('/profile', [App\Http\Controllers\HomeController::class, 'profile'])->name('profile');
@@ -37,7 +46,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/payNow', [App\Http\Controllers\TransactionController::class, 'payNow'])->name('pay');
     Route::post('/topUp', [App\Http\Controllers\TransactionController::class, 'topUp'])->name('topUp');
     Route::get('/download{order_id}', [App\Http\Controllers\TransactionController::class, 'download'])->name('download');
-  })->name('user');
+  });
 });
 
 

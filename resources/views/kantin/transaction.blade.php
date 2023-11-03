@@ -1,5 +1,28 @@
 @extends('layouts.admin')
 
+@section('sidebar')
+    <a href="{{ route('kantin') }}"
+        class="text-base font-semibold h-auto w-full flex items-center gap-1 p-3 px-4 rounded-lg 
+{{ request()->routeIs('kantin') ? 'bg-blue-600 text-white' : 'text-blue-600' }}">
+        <span class="material-symbols-outlined">
+            person
+        </span>
+        <span class="">
+            User
+        </span>
+    </a>
+    <a href="{{ route('accept') }}"
+        class="text-base font-semibold h-auto w-full flex items-center gap-1 p-3 px-4 rounded-lg 
+{{ request()->routeIs('accept') ? 'bg-blue-600 text-white' : 'text-blue-600' }}">
+        <span class="material-symbols-outlined">
+            history
+        </span>
+        <span class="">
+            Transaction
+        </span>
+    </a>
+@endsection
+
 @section('content')
     <div class="relative h-full">
         <div class="gap-4 flex flex-col h-full">
@@ -15,7 +38,7 @@
                         </button>
                         <div class="flex flex-col font-semibold">
                             <span class="text-lg font-normal">Client</span>
-                            <span class="text-3xl">{{ $nasabah }}</span>
+                            {{-- <span class="text-3xl">{{ $nasabah }}</span> --}}
                         </div>
                     </div>
                     <div class=" h-auto flex flex-row items-center gap-4 p-4 bg-white rounded-lg ">
@@ -27,7 +50,7 @@
                         </button>
                         <div class="flex flex-col font-semibold">
                             <span class="text-lg font-normal">Transaction</span>
-                            <span class="text-3xl">{{ $wallet_count }}</span>
+                            {{-- <span class="text-3xl">{{ $wallet_count }}</span> --}}
                         </div>
                     </div>
                     <div class=" h-auto flex flex-row items-center gap-4 p-4 bg-white rounded-lg ">
@@ -39,7 +62,7 @@
                         </button>
                         <div class="flex flex-col font-semibold">
                             <span class="text-lg font-normal">Pending</span>
-                            <span class="text-3xl">{{ $transaction_count }}</span>
+                            {{-- <span class="text-3xl">{{ $transaction_count }}</span> --}}
                         </div>
                     </div>
 
@@ -66,9 +89,9 @@
                     <table class="min-w-full bg-white table-auto">
                         <thead>
                             <tr>
-                                <th
+                                {{-- <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                                    ID</th>
+                                    ID</th> --}}
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
                                     User</th>
@@ -80,6 +103,12 @@
                                     Debit</th> --}}
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    order id</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Total price</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
                                     Status</th>
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
@@ -87,25 +116,34 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($banks as $key => $bank)
-                                @if ($bank->credit != null)
+                            @foreach ($all_transaction as $key => $transaction)
+                                @if ($transaction->status != 'dikeranjang')
                                     <tr>
+                                        {{-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            {{ $key - 1 }}</td> --}}
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $key + 1}}</td>
+                                            {{ $transaction->user->name }}</td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $bank->user->name }}</td>
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $bank->credit }}
+                                            ({{ $transaction->quantity }})
+                                            {{ $transaction->product->name }}
                                         </td>
-                                        {{-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $bank->debit }}
-                                    </td> --}}
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            @if ($bank->status === 'pending')
+                                            {{ $transaction->order_id }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            {{ $transaction->price }}
+                                        </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            {{ $transaction->status }}
+                                        </td>
+
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            @if ($transaction->status === 'dibayar')
                                                 <div class="flex items-center">
                                                     <div class="w-2 h-2 bg-yellow-600 rounded-full mr-2"></div>
                                                     <p class="text-yellow-600">Pending</p>
                                                 </div>
-                                            @elseif ($bank->status === 'success')
+                                            @else
                                                 <div class="flex items-center">
                                                     <div class="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
                                                     <p class="text-green-600">Success</p>
@@ -113,8 +151,10 @@
                                             @endif
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            @if ($bank->status === 'pending')
-                                                <form class="" action="/topup/{{ $bank->id }}" method="post">
+                                            @if ($transaction->status === 'dibayar')
+                                                <form action="/take/{{ $transaction->id }}" method="post">
+                                                    {{-- <form action="/transaction-kantin/{{ $transaction->id }}" method="post"> --}}
+
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="submit"
@@ -124,7 +164,7 @@
                                                     </button>
                                                 </form>
                                             @else
-                                                <form class="" action="/topup/{{ $bank->id }}" method="post">
+                                                <form class="" action="/take/{{ $transaction->id }}" method="post">
                                                     @csrf
                                                     @method('PUT')
                                                     <button type="" disabled class="p-2 px-4  text-blue-600 "

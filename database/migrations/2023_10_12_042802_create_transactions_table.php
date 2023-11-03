@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained();
             $table->foreignId('product_id')->constrained()->onDelete('cascade');
-            $table->enum('status', ['dikeranjang', 'dibayar']);
+            $table->enum('status', ['dikeranjang', 'dibayar', 'diambil']);
             $table->string('order_id')->nullable();
             $table->double('price');
             $table->integer('quantity')->nullable()->default(1);

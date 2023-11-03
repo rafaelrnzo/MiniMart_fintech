@@ -1,5 +1,26 @@
 @extends('layouts.admin')
-
+@section('sidebar')
+    <a href="{{ route('admin') }}"
+        class="text-base font-semibold h-auto w-full flex items-center gap-1 p-3 px-4 rounded-lg 
+{{ request()->routeIs('admin') ? 'bg-blue-600 text-white' : 'text-blue-600' }}">
+        <span class="material-symbols-outlined">
+            dashboard
+        </span>
+        <span class="">
+            Dashboard
+        </span>
+    </a>
+    {{-- <a href="{{ route('') }}"
+        class="text-base font-semibold h-auto w-full flex items-center gap-1 p-3 px-4 rounded-lg 
+{{ request()->routeIs('') ? 'bg-blue-600 text-white' : 'text-blue-600' }}">
+        <span class="material-symbols-outlined">
+            person
+        </span>
+        <span class="">
+            User
+        </span>
+    </a> --}}
+@endsection
 @section('content')
     <div class="relative h-full">
         <div class="gap-4 flex flex-col h-full">
@@ -15,7 +36,7 @@
                         </button>
                         <div class="flex flex-col font-semibold">
                             <span class="text-lg font-normal">Client</span>
-                            <span class="text-3xl">{{ $nasabah }}</span>
+                            <span class="text-3xl">{{ $total_user }}</span>
                         </div>
                     </div>
                     <div class=" h-auto flex flex-row items-center gap-4 p-4 bg-white rounded-lg ">
@@ -26,8 +47,8 @@
                             </span>
                         </button>
                         <div class="flex flex-col font-semibold">
-                            <span class="text-lg font-normal">Transaction</span>
-                            <span class="text-3xl">{{ $wallet_count }}</span>
+                            <span class="text-lg font-normal">Teller</span>
+                            <span class="text-3xl">{{ $total_teller }}</span>
                         </div>
                     </div>
                     <div class=" h-auto flex flex-row items-center gap-4 p-4 bg-white rounded-lg ">
@@ -38,7 +59,7 @@
                             </span>
                         </button>
                         <div class="flex flex-col font-semibold">
-                            <span class="text-lg font-normal">Pending</span>
+                            <span class="text-lg font-normal">Total Transaction</span>
                             <span class="text-3xl">{{ $transaction_count }}</span>
                         </div>
                     </div>
@@ -71,73 +92,42 @@
                                     ID</th>
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                                    User</th>
+                                    Name</th>
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Credit</th>
-                                {{-- <th
-                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Debit</th> --}}
+                                    Email</th>
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
-                                    Status</th>
+                                    Password</th>
+                                <th
+                                    class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
+                                    Role</th>
                                 <th
                                     class="px-6 py-3 border-b border-gray-200 bg-slate-100 text-left text-xs leading-4 font-semibold text-gray-600 uppercase tracking-wider">
                                     Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($banks as $key => $bank)
-                                @if ($bank->credit != null)
+                            @foreach ($all_users as $key => $item)
+                                {{-- @if ($item->credit != null) --}}
                                     <tr>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $key + 1}}</td>
+                                            {{ $key + 1 }}</td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $bank->user->name }}</td>
+                                            {{ $item->name }}</td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            {{ $bank->credit }}
-                                        </td>
-                                        {{-- <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">{{ $bank->debit }}
-                                    </td> --}}
-                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            @if ($bank->status === 'pending')
-                                                <div class="flex items-center">
-                                                    <div class="w-2 h-2 bg-yellow-600 rounded-full mr-2"></div>
-                                                    <p class="text-yellow-600">Pending</p>
-                                                </div>
-                                            @elseif ($bank->status === 'success')
-                                                <div class="flex items-center">
-                                                    <div class="w-2 h-2 bg-green-600 rounded-full mr-2"></div>
-                                                    <p class="text-green-600">Success</p>
-                                                </div>
-                                            @endif
+                                            {{ $item->email }}
                                         </td>
                                         <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                            @if ($bank->status === 'pending')
-                                                <form class="" action="/topup/{{ $bank->id }}" method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="submit"
-                                                        class="p-2 px-4 text-white rounded-full bg-blue-600"
-                                                        target="_blank">
-                                                        Accept
-                                                    </button>
-                                                </form>
-                                            @else
-                                                <form class="" action="/topup/{{ $bank->id }}" method="post">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <button type="" disabled class="p-2 px-4  text-blue-600 "
-                                                        target="_blank">
-                                                        <span class="material-icons">
-                                                            check
-                                                        </span>
-                                                    </button>
-                                                </form>
-                                            @endif
+                                            {{ $item->password }}
                                         </td>
+                                        <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                            {{ $item->role }}
+                                        </td>
+                                  
+                                       
                                     </tr>
-                                @endif
+                                {{-- @endif --}}
                             @endforeach
 
                         </tbody>

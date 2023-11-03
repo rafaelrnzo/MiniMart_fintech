@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\UserApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,4 +21,4 @@ use Illuminate\Support\Facades\Route;
 // });
 
 Route::get('/product', [Productcontroller::class, 'index']);
-
+Route::get('/user', [UserApi::class, 'index']);

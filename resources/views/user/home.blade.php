@@ -17,7 +17,7 @@
                                 <button @click="showModal = true"
                                     class="relative rounded-full border border-slate-400 bg-white p-1 flex items-center justify-center">
 
-                                        <span class="material-icons w-auto text-blue-600 ">add</span>
+                                    <span class="material-icons w-auto text-blue-600 ">add</span>
                                 </button>
 
                                 <div x-show="showModal"
@@ -108,12 +108,22 @@
                                           class="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
                                          > --}}
                                         </div>
-                                        <div
-                                            class="border border-blue-600 px-3 p-1 rounded-full mx-2 w-auto hover:bg-blue-600 transition-all ease-in-out duration-300">
-                                            <button action="" type="submit"
-                                                class="w-full font-medium text-md text-blue-600 hover:text-white">add to
-                                                cart</button>
-                                        </div>
+
+                                        @if ($saldo <= 2000 )
+                                            <div class=" mx-2 ">
+                                                <button action="" type="" disabled
+                                                    class="w-full px-3 p-1 font-medium text-md bg-slate-100 rounded-full ">add
+                                                    to
+                                                    cart</button>
+                                            </div>
+                                        @else
+                                            <div
+                                                class="border border-blue-600 px-3 p-1 rounded-full mx-2 w-auto hover:bg-blue-600 transition-all ease-in-out duration-300">
+                                                <button action="" type="submit"
+                                                    class="w-full font-medium text-md text-blue-600 hover:text-white">add to
+                                                    cart</button>
+                                            </div>
+                                        @endif
                                     </div>
                                 </div>
                             </form>
@@ -122,7 +132,7 @@
                     </div>
 
                 </div>
-                <div class="w-1/4 flex flex-col gap-6 relative">
+                <div class="w-1/4 flex flex-col gap-6 ">
                     <div class="w-full h-auto shadow-sm bg-white p-5 rounded-xl justify-between flex flex-col sticky ">
                         <div class="pb-2">
                             <p class="font-semibold text-xl">Keranjang</p>
@@ -141,12 +151,20 @@
                                 <p class="font-semibold text-lg">Total</p>
                                 <p class="font-semibold text-lg">Rp{{ $total_biaya }}</p>
                             </div>
-                            <form action="{{ route('pay') }}" method="post">
-                                <div class="bg-blue-600 p-2 rounded-full">
+                            @if ($saldo <= $total_biaya)
+                                <div class="bg-slate-100 p-2 rounded-full">
                                     @csrf
-                                    <button class="w-full font-medium text-lg text-white" type="submit">Beli</button>
+                                    <button disabled class="w-full font-medium text- text-slate-600" type="submit">Beli</button>
                                 </div>
-                            </form>
+                            @else
+                                <form action="{{ route('pay') }}" method="post">
+                                    <div class="bg-blue-600 p-2 rounded-full">
+                                        @csrf
+                                        <button class="w-full font-medium text-lg text-white" type="submit">Beli</button>
+                                    </div>
+                                </form>
+                            @endif
+
                         </div>
                     </div>
                     {{-- <div class="w-full h-auto shadow-sm bg-white p-5 rounded-xl justify-between flex flex-col sticky ">

@@ -7,12 +7,13 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
-    public function index(){
+    public function index()
+    {
         $all_products = Products::all();
 
-        return response()->json([
-            'message' => "Success get data",
-            "data" => $all_products
-        ],200);
+        return response()->json(
+            $all_products,
+            200
+        );
     }
 }

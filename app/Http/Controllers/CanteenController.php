@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Products;
+use App\Models\Transactions;
 use Illuminate\Http\Request;
 
 class CanteenController extends Controller
@@ -17,8 +18,9 @@ class CanteenController extends Controller
     {
         $all_products = Products::all();
         $categories = Category::all();
+        
 
-        return view('kantin.index', compact('all_products','categories'));
+        return view('kantin.index', compact('all_products', 'categories'));
     }
 
     /**
@@ -55,12 +57,29 @@ class CanteenController extends Controller
         return redirect()->back();
     }
 
+    public function accIndex()
+    {
+        $all_transaction = Transactions::with('user')->get();
+
+        return view('kantin.transaction', compact('all_transaction'));
+    }
+
+    public function takeOrder($id)
+    {
+        $transaction = Transactions::find($id);
+
+        // dd($transaction);
+        $transaction->update([
+            "status" => "diambil"
+        ]);
+
+        return redirect()->back();
+    }
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
     }
 
     /**
@@ -68,7 +87,10 @@ class CanteenController extends Controller
      */
     public function edit(string $id)
     {
-        
+        $product = Products::find($id);
+        $categories = Category::all();
+
+        return view('product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -76,8 +98,13 @@ class CanteenController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $product = Products::find($id);
+        // Update the product's attributes with the data from the request
+        $product->update($request->all());
+
+        return redirect()->route('kantin')->with('success', 'Product updated successfully');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -89,6 +116,5 @@ class CanteenController extends Controller
         $product->delete();
 
         return redirect()->route('kantin')->with('success');
-
     }
 }

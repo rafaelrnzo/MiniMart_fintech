@@ -17,7 +17,7 @@ return new class extends Migration
             $table->double('price');	
             $table->integer('stock');	
             $table->text('photo');	
-            $table->text('description');	
+            $table->text('description')->nullable();	
             $table->foreignId('category_id')->constrained();	
             $table->char('stand', 2)->nullable();
             $table->timestamps();

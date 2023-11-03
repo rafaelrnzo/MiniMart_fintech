@@ -44,7 +44,7 @@ class TransactionController extends Controller
         }
 
         $user = Auth::user();
-        $wallet = Wallets::where('user_id', $user->id)->first();
+        $wallet = Wallets::where('user_id', $user->id)->where('status', 'success')->first();
 
         if (!$wallet) {
             return redirect()->back()->with('error', 'No wallet found');
